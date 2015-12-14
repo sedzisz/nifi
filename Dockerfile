@@ -8,12 +8,14 @@ ENV NIFI_HOME /opt/nifi
 ENV VERSION 0.4.0
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.3/community/" >> /etc/apk/repositories &&\
-  apk update && apk add --upgrade openjdk8 && \
-  mkdir -p /opt/nifi && \
-  curl ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_HOME} --strip-components=1 && \
+  apk update && apk add --upgrade openjdk8 curl && \
+  mkdir /opt && \
+  curl -s ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C /opt  && \
+  mv /opt/nifi-${VERSION} ${NIFI_HOME} && \
   sed -i '/java.arg.1/a java.arg.15=-Djava.security.egd=file:/dev/./urandom' ${NIFI_HOME}/conf/bootstrap.conf && \
   sed -i '/nifi.flow/s#conf/#flow/#g' ${NIFI_HOME}/conf/nifi.properties && \
   mkdir ${NIFI_HOME}/flow && \
+  apk del curl && \
   rm -rf /var/cache/apk/*
 
 ADD start_nifi.sh /${NIFI_HOME}/
