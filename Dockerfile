@@ -1,18 +1,18 @@
 FROM alpine
 MAINTAINER clemenko@gmail.com
-LABEL VERSION="0.4.0" \
+LABEL VERSION="0.5.0" \
     RUN="docker run -d -p 8080:8080 clemenko/nifi"
 
 ENV DIST_MIRROR http://mirror.cc.columbia.edu/pub/software/apache/nifi
 ENV NIFI_HOME /opt/nifi
-ENV VERSION 0.4.0
+ENV VERSION 0.5.0
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.3/community/" >> /etc/apk/repositories &&\
   apk update && apk add --upgrade openjdk8 curl && \
   mkdir /opt && \
   curl -s ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C /opt  && \
   mv /opt/nifi-${VERSION} ${NIFI_HOME} && \
-  sed -i '/java.arg.1/a java.arg.15=-Djava.security.egd=file:/dev/./urandom' ${NIFI_HOME}/conf/bootstrap.conf && \
+#  sed -i '/java.arg.1/a java.arg.15=-Djava.security.egd=file:/dev/./urandom' ${NIFI_HOME}/conf/bootstrap.conf && \
   sed -i '/nifi.flow/s#conf/#flow/#g' ${NIFI_HOME}/conf/nifi.properties && \
   mkdir ${NIFI_HOME}/flow && \
   apk del curl && \
