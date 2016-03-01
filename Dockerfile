@@ -1,11 +1,11 @@
 FROM alpine
 MAINTAINER clemenko@gmail.com
-LABEL VERSION="0.5.0" \
+LABEL VERSION="0.5.1" \
     RUN="docker run -d -p 8080:8080 clemenko/nifi"
 
 ENV DIST_MIRROR http://mirror.cc.columbia.edu/pub/software/apache/nifi
 ENV NIFI_HOME /opt/nifi
-ENV VERSION 0.5.0
+ENV VERSION 0.5.1
 
 RUN echo "http://dl-4.alpinelinux.org/alpine/v3.3/community/" >> /etc/apk/repositories &&\
   apk update && apk add --upgrade openjdk8 curl && \
