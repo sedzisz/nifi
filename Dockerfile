@@ -1,13 +1,13 @@
 FROM alpine
 MAINTAINER clemenko@gmail.com
-LABEL VERSION="0.6.1" \
+LABEL VERSION="0.7.0" \
     RUN="docker run -d -p 8080:8080 clemenko/nifi"
 
 ENV DIST_MIRROR http://mirror.cc.columbia.edu/pub/software/apache/nifi
 ENV NIFI_HOME /opt/nifi
-ENV VERSION 0.6.1
+ENV VERSION 0.7.0
 
-RUN echo "http://dl-4.alpinelinux.org/alpine/v3.3/community/" >> /etc/apk/repositories &&\
+RUN echo "http://dl-4.alpinelinux.org/alpine/v3.4/community/" >> /etc/apk/repositories &&\
   apk update && apk add --upgrade openjdk8 curl && \
   mkdir /opt && \
   curl -s ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C /opt  && \
